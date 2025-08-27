@@ -24,25 +24,40 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				surface: {
+					DEFAULT: 'hsl(var(--surface))',
+					raised: 'hsl(var(--surface-raised))',
+					pressed: 'hsl(var(--surface-pressed))'
+				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					glow: 'hsl(var(--primary-glow))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
-				destructive: {
-					DEFAULT: 'hsl(var(--destructive))',
-					foreground: 'hsl(var(--destructive-foreground))'
+				accent: {
+					DEFAULT: 'hsl(var(--accent))',
+					foreground: 'hsl(var(--accent-foreground))',
+					light: 'hsl(var(--accent-light))'
+				},
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					foreground: 'hsl(var(--success-foreground))'
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))'
+				},
+				danger: {
+					DEFAULT: 'hsl(var(--danger))',
+					foreground: 'hsl(var(--danger-foreground))'
 				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
 					foreground: 'hsl(var(--muted-foreground))'
-				},
-				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
@@ -62,6 +77,15 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
+			},
+			fontFamily: {
+				display: ['var(--font-display)'],
+				body: ['var(--font-body)']
+			},
+			spacing: {
+				'header': 'var(--header-height)',
+				'sidebar': 'var(--sidebar-width)',
+				'sidebar-collapsed': 'var(--sidebar-collapsed)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

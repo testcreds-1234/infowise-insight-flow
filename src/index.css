@@ -2,57 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Neumorphic Enterprise Design System - All colors MUST be HSL */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Neumorphic Background System */
+    --background: 210 20% 88%;
+    --surface: 210 20% 90%;
+    --surface-raised: 210 20% 92%;
+    --surface-pressed: 210 20% 86%;
+    --foreground: 220 15% 25%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Neumorphic Shadows */
+    --shadow-light: 0 0 20px hsl(0 0% 100% / 0.8);
+    --shadow-dark: 0 0 20px hsl(220 15% 25% / 0.15);
+    --shadow-inset-light: inset 0 0 20px hsl(0 0% 100% / 0.8);
+    --shadow-inset-dark: inset 0 0 20px hsl(220 15% 25% / 0.15);
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Enterprise Color Palette */
+    --primary: 215 25% 35%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 215 35% 55%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --secondary: 210 20% 85%;
+    --secondary-foreground: 220 15% 35%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --accent: 200 35% 45%;
+    --accent-foreground: 0 0% 100%;
+    --accent-light: 200 45% 65%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --success: 145 55% 45%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 35 85% 55%;
+    --warning-foreground: 220 15% 25%;
+    
+    --danger: 0 65% 55%;
+    --danger-foreground: 0 0% 100%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 20% 82%;
+    --muted-foreground: 220 15% 45%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --card: 210 20% 90%;
+    --card-foreground: 220 15% 25%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --popover: 210 20% 92%;
+    --popover-foreground: 220 15% 25%;
 
-    --radius: 0.5rem;
+    --border: 210 20% 80%;
+    --input: 210 20% 90%;
+    --ring: 215 25% 35%;
 
-    --sidebar-background: 0 0% 98%;
+    --radius: 1.5rem;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Sidebar Colors */
+    --sidebar-background: 210 20% 87%;
+    --sidebar-foreground: 220 15% 35%;
+    --sidebar-primary: 215 25% 35%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 20% 85%;
+    --sidebar-accent-foreground: 220 15% 35%;
+    --sidebar-border: 210 20% 80%;
+    --sidebar-ring: 215 25% 35%;
 
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Typography Scale */
+    --font-display: 'Inter', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    
+    /* Spacing & Layout */
+    --header-height: 4rem;
+    --sidebar-width: 16rem;
+    --sidebar-collapsed: 4rem;
   }
 
   .dark {
@@ -100,6 +120,87 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@layer components {
+  /* Neumorphic Component Base Classes */
+  .neumorphic {
+    @apply rounded-[var(--radius)] transition-all duration-300;
+    box-shadow: 
+      var(--shadow-light),
+      var(--shadow-dark);
+  }
+
+  .neumorphic-raised {
+    @apply neumorphic bg-surface-raised;
+  }
+
+  .neumorphic-pressed {
+    @apply rounded-[var(--radius)] bg-surface-pressed transition-all duration-150;
+    box-shadow: 
+      var(--shadow-inset-light),
+      var(--shadow-inset-dark);
+  }
+
+  .neumorphic-flat {
+    @apply rounded-[var(--radius)] bg-surface transition-all duration-300;
+    box-shadow: 
+      8px 8px 16px hsl(220 15% 25% / 0.1),
+      -8px -8px 16px hsl(0 0% 100% / 0.7);
+  }
+
+  .neumorphic-button {
+    @apply neumorphic-raised hover:neumorphic-flat active:neumorphic-pressed;
+    @apply cursor-pointer select-none;
+  }
+
+  .neumorphic-card {
+    @apply neumorphic-raised border-0;
+  }
+
+  .neumorphic-input {
+    @apply neumorphic-pressed border-0 outline-none;
+  }
+
+  /* Enterprise Typography */
+  .text-display {
+    @apply font-display font-semibold tracking-tight;
+  }
+
+  .text-body {
+    @apply font-body;
+  }
+
+  /* Status Indicators */
+  .status-success {
+    @apply bg-success/10 text-success border-success/20;
+  }
+
+  .status-warning {
+    @apply bg-warning/10 text-warning border-warning/20;
+  }
+
+  .status-danger {
+    @apply bg-danger/10 text-danger border-danger/20;
+  }
+
+  /* Workflow Step Indicators */
+  .step-active {
+    @apply neumorphic-raised bg-primary text-primary-foreground;
+  }
+
+  .step-completed {
+    @apply neumorphic-flat bg-success text-success-foreground;
+  }
+
+  .step-pending {
+    @apply neumorphic-flat bg-muted text-muted-foreground;
+  }
+
+  /* Chart Container */
+  .chart-container {
+    @apply neumorphic-card p-6;
   }
 }
