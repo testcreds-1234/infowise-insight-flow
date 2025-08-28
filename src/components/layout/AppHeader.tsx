@@ -2,7 +2,6 @@ import { Bell, Search, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { SidebarTrigger } from '@/components/ui/sidebar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,19 +19,14 @@ export function AppHeader() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Left side */}
-      <div className="flex items-center space-x-4 flex-1">
-        <SidebarTrigger className="neumorphic-button p-2 rounded-xl md:hidden" />
-        
-        {/* Search */}
-        <div className="flex-1 max-w-md">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={16} />
-            <Input
-              placeholder="Search documents, policies, or compliance rules..."
-              className="neumorphic-input pl-10 pr-4 py-2 w-full"
-            />
-          </div>
+      {/* Search */}
+      <div className="flex-1 max-w-md">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={16} />
+          <Input
+            placeholder="Search documents, policies, or compliance rules..."
+            className="neumorphic-input pl-10 pr-4 py-2 w-full"
+          />
         </div>
       </div>
 
