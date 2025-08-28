@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -5,7 +6,9 @@ import {
   FileText,
   FlaskConical,
   BarChart3,
-  Settings
+  Settings,
+  Menu,
+  X
 } from 'lucide-react';
 import {
   Sidebar,
@@ -49,55 +52,63 @@ const sidebarItems = [
 ];
 
 export function AppSidebar() {
-  const { open } = useSidebar();
+  const [manuallyCollapsed, setManuallyCollapsed] = useState(false);
+  const { open, setOpen } = useSidebar();
   const location = useLocation();
   const currentPath = location.pathname;
 
   const isActive = (path: string) => currentPath === path;
   const isExpanded = sidebarItems.some((item) => isActive(item.href));
+  const isCollapsed = manuallyCollapsed || !open;
+
+  const toggleCollapse = () => {
+    setManuallyCollapsed(!manuallyCollapsed);
+    if (manuallyCollapsed) {
+      setOpen(true);
+    }
+  };
 
   return (
     <Sidebar
       className={cn(
         "neumorphic-card border-r transition-all duration-300",
-        open ? "w-64" : "w-14"
+        isCollapsed ? "w-14" : "w-64"
       )}
       collapsible="icon"
     >
       <SidebarContent>
         {/* Header */}
         <div className="p-4 border-b border-border/50">
-          <motion.div
-            className="flex items-center space-x-2"
-            initial={false}
-            animate={{ 
-              justifyContent: open ? 'flex-start' : 'center'
-            }}
-          >
-            <div className="w-8 h-8 neumorphic-raised rounded-xl flex items-center justify-center bg-primary">
-              <span className="text-primary-foreground font-bold text-sm">I</span>
-            </div>
-            {open && (
-              <motion.span
-                className="text-display text-lg text-foreground"
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -10 }}
-                transition={{ duration: 0.2 }}
+          <div className="flex items-center justify-between">
+            {!isCollapsed && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="flex items-center space-x-2"
               >
-                Infowise
-              </motion.span>
+                <div className="w-8 h-8 neumorphic-raised rounded-xl flex items-center justify-center bg-primary">
+                  <span className="text-primary-foreground font-bold text-sm">I</span>
+                </div>
+                <span className="text-display text-lg text-foreground">Infowise</span>
+              </motion.div>
             )}
-          </motion.div>
+            <button
+              onClick={toggleCollapse}
+              className="neumorphic-button p-2 rounded-xl"
+            >
+              {isCollapsed ? <Menu size={16} /> : <X size={16} />}
+            </button>
+          </div>
         </div>
 
         <SidebarGroup>
-          <SidebarGroupLabel className={cn(!open && "sr-only")}>
+          <SidebarGroupLabel className={cn(isCollapsed && "sr-only")}>
             Navigation
           </SidebarGroupLabel>
           
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-2 p-4">
               {sidebarItems.map((item) => {
                 const itemIsActive = isActive(item.href);
                 
@@ -106,18 +117,19 @@ export function AppSidebar() {
                     <SidebarMenuButton 
                       asChild
                       className={cn(
+                        "flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200",
                         "neumorphic-button text-sidebar-foreground hover:text-sidebar-primary",
                         itemIsActive && "neumorphic-pressed bg-sidebar-primary text-sidebar-primary-foreground"
                       )}
                     >
                       <NavLink to={item.href} end>
-                        <item.icon className="h-4 w-4" />
-                        {open && (
+                        <item.icon size={20} className="flex-shrink-0" />
+                        {!isCollapsed && (
                           <motion.span
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -10 }}
-                            transition={{ duration: 0.2 }}
+                            className="text-sm font-medium"
                           >
                             {item.title}
                           </motion.span>
